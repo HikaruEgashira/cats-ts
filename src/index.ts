@@ -6,7 +6,7 @@ import { Monoid } from './monoid';
  * sum(List(1, 2, 3, 4), IntMonoid)
  * // res4: Int = 10
  */
-export const sum = <T>(m: Monoid<T>) => (xs: Array<T>) => {
+export const sum = <T>(xs: Array<T>) => (m: Monoid<T>) => {
   return xs.reduce(m.combine, m.empty);
 };
 
