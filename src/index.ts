@@ -7,7 +7,7 @@ import { Monoid } from './monoid';
  * // res4: Int = 10
  */
 export const sum = <T>(xs: Array<T>) => (m: Monoid<T>) => {
-  return xs.reduce(m.combine, m.empty);
+    return xs.reduce(m.combine, m.empty);
 };
 
 export * from './monoid';
