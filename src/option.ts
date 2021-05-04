@@ -3,10 +3,10 @@
  */
 import { Monoid } from './monoid';
 
-interface None {
+export interface None {
     _tag: 'none';
 }
-interface Some<A> {
+export interface Some<A> {
     _tag: 'some';
     value: A;
 }
@@ -45,12 +45,12 @@ export class OptionMonoid<A> implements Monoid<Option<A>> {
     empty = none;
 }
 
-export const optionMonoid = <A>(semigroup: Monoid<A>): Monoid<Option<A>> => ({
+export const optionMonoid = <A>(monoid: Monoid<A>): Monoid<Option<A>> => ({
     combine: (a, b) =>
         match<A, Option<A>>(a)(
             (valueA) =>
                 match<A, Option<A>>(b)(
-                    (valueB) => some(semigroup.combine(valueA, valueB)),
+                    (valueB) => some(monoid.combine(valueA, valueB)),
                     () => none
                 ),
             () => none

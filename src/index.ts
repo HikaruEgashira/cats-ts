@@ -11,3 +11,5 @@ export const sum = <T>(xs: Array<T>) => (m: Monoid<T>) => {
 };
 
 export * from './monoid';
+export * from './monoidInstances';
+export * from './option';
