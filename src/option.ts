@@ -31,6 +31,26 @@ export const match = <A, B>(value: Option<A>) => (
     }
 };
 
+export class OptionEntity<A> implements Monoid<Option<A>> {
+    semigroup: Monoid<A>;
+
+    constructor(semigroup: Monoid<A>) {
+        this.semigroup = semigroup;
+    }
+
+    combine = (a: Option<A>, b: Option<A>) =>
+        match<A, Option<A>>(a)(
+            (sa) =>
+                match<A, Option<A>>(b)(
+                    (sb) => some(this.semigroup.combine(sa, sb)),
+                    () => none
+                ),
+            () => none
+        );
+
+    empty = none;
+}
+
 export const optionMonoid = <A>(semigroup: Monoid<A>): Monoid<Option<A>> => ({
     empty: none,
     combine: (a, b) => {
