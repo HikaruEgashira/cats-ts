@@ -23,15 +23,9 @@ export const isNone = <A>(value: Option<A>): value is None =>
 export const match = <A, B>(value: Option<A>) => (
     fsome: (some: A) => B,
     fnone: () => B
-) => {
-    if (isSome(value)) {
-        return fsome(value.value);
-    } else {
-        return fnone();
-    }
-};
+) => (isSome(value) ? fsome(value.value) : fnone());
 
-export class OptionEntity<A> implements Monoid<Option<A>> {
+export class OptionMonoid<A> implements Monoid<Option<A>> {
     semigroup: Monoid<A>;
 
     constructor(semigroup: Monoid<A>) {
@@ -52,16 +46,15 @@ export class OptionEntity<A> implements Monoid<Option<A>> {
 }
 
 export const optionMonoid = <A>(semigroup: Monoid<A>): Monoid<Option<A>> => ({
-    empty: none,
-    combine: (a, b) => {
-        return match<A, Option<A>>(a)(
-            (sa) => {
-                return match<A, Option<A>>(b)(
-                    (sb) => some(semigroup.combine(sa, sb)),
+    combine: (a, b) =>
+        match<A, Option<A>>(a)(
+            (valueA) =>
+                match<A, Option<A>>(b)(
+                    (valueB) => some(semigroup.combine(valueA, valueB)),
                     () => none
-                );
-            },
+                ),
             () => none
-        );
-    },
+        ),
+
+    empty: none,
 });
