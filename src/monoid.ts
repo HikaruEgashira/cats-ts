@@ -1,6 +1,3 @@
-import { stringMonoid, numberMonoid } from '.';
-import { optionMonoid } from './option';
-
 export interface Semigroup<A> {
     combine(a: A, b: A): A;
 }
@@ -12,12 +9,3 @@ export interface Semigroup<A> {
 export interface Monoid<A> extends Semigroup<A> {
     empty: A;
 }
-
-export const monoid = () => ({
-    string: stringMonoid,
-    number: numberMonoid,
-    option: {
-        string: optionMonoid(stringMonoid),
-        number: optionMonoid(numberMonoid),
-    },
-});

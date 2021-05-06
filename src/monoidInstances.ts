@@ -1,4 +1,5 @@
 import { Monoid } from './monoid';
+import { optionMonoid } from './option';
 
 // object IntMonoid {
 //     def combine(a: Int, b: Int): Int = a + b
@@ -13,3 +14,12 @@ export const stringMonoid: Monoid<string> = {
     combine: (a: string, b: string) => `${a}${b}`,
     empty: '',
 };
+
+export const monoid = () => ({
+    string: stringMonoid,
+    number: numberMonoid,
+    option: {
+        string: optionMonoid(stringMonoid),
+        number: optionMonoid(numberMonoid),
+    },
+});
