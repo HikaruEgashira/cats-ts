@@ -15,11 +15,11 @@ export const stringMonoid: Monoid<string> = {
     empty: '',
 };
 
-export const monoid = () => ({
-    string: stringMonoid,
-    number: numberMonoid,
-    option: {
+export class MonoidInstances {
+    string = stringMonoid;
+    number = numberMonoid;
+    option = {
         string: optionMonoid(stringMonoid),
         number: optionMonoid(numberMonoid),
-    },
-});
+    };
+}

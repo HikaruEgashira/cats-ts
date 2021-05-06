@@ -1,15 +1,15 @@
-import { printable, printableInstances } from '../src/printable';
+import { printable, PrintableInstances } from '../src/printable';
 
 describe('test', () => {
     it('string', () => {
         const str = printable.format('Hello, World!')(
-            printableInstances.stringPrintable
+            new PrintableInstances()['string']
         );
         expect(str).toBe('Hello, World!');
     });
 
     it('number', () => {
-        const num = printable.format(10)(printableInstances.numberPrintable);
+        const num = printable.format(10)(new PrintableInstances()['number']);
         expect(num).toBe('10');
     });
 });

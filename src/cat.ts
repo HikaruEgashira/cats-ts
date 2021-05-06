@@ -1,4 +1,4 @@
-import { Printable, printable, printableInstances } from './printable';
+import { Printable, printable, PrintableInstances } from './printable';
 
 export class Cat {
     name: string;
@@ -15,13 +15,13 @@ export class Cat {
 export const catPrintable: Printable<Cat> = {
     format: (cat: Cat) => {
         const name = printable.format(cat.name)(
-            printableInstances.stringPrintable
+            new PrintableInstances()['string']
         );
         const age = printable.format(cat.age)(
-            printableInstances.numberPrintable
+            new PrintableInstances()['number']
         );
         const color = printable.format(cat.color)(
-            printableInstances.stringPrintable
+            new PrintableInstances()['string']
         );
         return `${name} is a ${age} year-old ${color} cat.`;
     },
