@@ -7,9 +7,9 @@ export class PrintableInstances {
     number: Printable<number> = { format: (v) => v.toString() };
 }
 
-export type ExPrintable<A> = {
+export interface ExPrintable<A> extends Printable<A> {
     print: (input: A) => void;
-} & Printable<A>;
+}
 
 export const printable = {
     format: <A>(input: A) => (p: Printable<A>): string => p.format(input),
