@@ -1,4 +1,4 @@
-import { Printable, printable, PrintableInstances } from './printable';
+import { Printable, PrintableInstances } from './printable';
 
 export class Cat {
     name: string;
@@ -12,17 +12,14 @@ export class Cat {
     }
 }
 
-export const catPrintable: Printable<Cat> = {
-    format: (cat: Cat) => {
-        const name = printable.format(cat.name)(
-            new PrintableInstances()['string']
-        );
-        const age = printable.format(cat.age)(
-            new PrintableInstances()['number']
-        );
-        const color = printable.format(cat.color)(
-            new PrintableInstances()['string']
-        );
-        return `${name} is a ${age} year-old ${color} cat.`;
-    },
+export const catPrintable = (): Printable<Cat> => {
+    const printableInstances = new PrintableInstances();
+    return {
+        format: (cat: Cat) => {
+            const name = printableInstances['string'].format(cat.name);
+            const age = printableInstances['number'].format(cat.age);
+            const color = printableInstances['string'].format(cat.color);
+            return `${name} is a ${age} year-old ${color} cat.`;
+        },
+    };
 };
