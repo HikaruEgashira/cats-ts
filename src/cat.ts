@@ -12,14 +12,12 @@ export class Cat {
     }
 }
 
-export const catPrintable = (): Printable<Cat> => {
-    const printableInstances = new PrintableInstances();
-    return {
-        format: (cat: Cat) => {
-            const name = printableInstances['string'].format(cat.name);
-            const age = printableInstances['number'].format(cat.age);
-            const color = printableInstances['string'].format(cat.color);
-            return `${name} is a ${age} year-old ${color} cat.`;
-        },
+export class CatPrintable implements Printable<Cat> {
+    private printableInstances = new PrintableInstances();
+    format = (cat: Cat) => {
+        const name = this.printableInstances['string'].format(cat.name);
+        const age = this.printableInstances['number'].format(cat.age);
+        const color = this.printableInstances['string'].format(cat.color);
+        return `${name} is a ${age} year-old ${color} cat.`;
     };
-};
+}
